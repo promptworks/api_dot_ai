@@ -22,11 +22,7 @@ describe ApiDotAi::Client, "#make" do
   subject       { described_class.new client_access_token: token, subscription_key: key }
 
   it 'returns HTTPResponse after making HTTPS request' do
-    request = double(path: 'query', verb: 'POST')
-    headers = {
-      'Authorization'             => 'Bearer #{token}',
-      'Ocp-Apim-Subscription-Key' => key
-    }
+    request = double(path: 'query', verb: 'POST', body: "NLP me!")
 
     stub_request(:post, ApiDotAi::Client::BASE_URL + 'query')
       .to_return(body: "{'a':'b'}", status: 200)
@@ -40,7 +36,7 @@ end
 describe ApiDotAi::Client, "#make!" do
   let(:token)   { 'bar' }
   let(:key)     { 'foo' }
-  let(:request) { double(path: 'query', verb: 'POST') }
+  let(:request) { double(path: 'query', verb: 'POST', body: "NLP me!") }
   subject       { described_class.new client_access_token: token, subscription_key: key }
 
   it 'returns HTTPResponse after making successful HTTPS request' do
